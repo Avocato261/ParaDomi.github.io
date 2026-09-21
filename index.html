@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para ti mi Domi 🌻</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --color-primario: #FFD700;
+            --color-secundario: #FFA500;
+            --color-texto: #FDF6E3;
+            --bg-oscuro: #0f0c29;
+            --bg-medio: #302b63;
+            --bg-claro: #24243e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--bg-oscuro), var(--bg-medio), var(--bg-claro));
+            color: var(--color-texto);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* =========================================
+           PANTALLA DE INICIO (NUEVO)
+        ========================================= */
+        #pantalla-inicio {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 12, 41, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 150;
+            transition: opacity 1.5s ease, visibility 1.5s ease;
+        }
+
+        .btn-lindo {
+            background: linear-gradient(135deg, var(--color-primario), var(--color-secundario));
+            color: #301708;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            padding: 15px 35px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(255, 215, 0, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: pulse-btn 2s infinite;
+        }
+
+        .btn-lindo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 25px rgba(255, 215, 0, 0.5);
+        }
+
+        @keyframes pulse-btn {
+            0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7); }
+            70% { box-shadow: 0 0 0 20px rgba(255, 215, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
+        }
+
+        /* =========================================
+           FONDO INMERSIVO
+        ========================================= */
+        .ambient-light {
+            position: fixed;
+            width: 80vw;
+            height: 80vw;
+            max-width: 800px;
+            max-height: 800px;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.12) 0%, transparent 60%);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 0;
+            animation: pulse-light 6s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse-light {
+            0% { opacity: 0.6; transform: translate(-50%, -50%) scale(0.9); }
+            100% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        /* =========================================
+           TARJETA
+        ========================================= */
+        .tarjeta-container {
+            position: relative;
+            z-index: 10;
+            width: min(90vw, 650px);
+            perspective: 1000px;
+            /* Estado inicial oculto */
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 1.5s ease 0.5s, transform 1.5s ease 0.5s;
+            pointer-events: none;
+        }
+
+        .tarjeta-container.revelada {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+        }
+
+        .tarjeta {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 50px 40px;
+            text-align: center;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(255, 255, 255, 0.05);
+            transform-style: preserve-3d;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotateX(0) rotateY(0); }
+            50% { transform: translateY(-15px) rotateX(2deg) rotateY(-2deg); }
+        }
+
+        /* =========================================
+           TEXTOS
+        ========================================= */
+        .titulo {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(3rem, 8vw, 4.5rem);
+            color: var(--color-primario);
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.5), 0 0 30px rgba(255, 215, 0, 0.3);
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+
+        .subtitulo {
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            color: rgba(255, 255, 255, 0.8);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .mensaje {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            font-weight: 300;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .mensaje p {
+            margin-bottom: 20px;
+        }
+
+        .especial {
+            font-weight: 600;
+            color: var(--color-primario);
+            font-size: 1.15em;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+        }
+
+        .mensaje-final {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2rem;
+            color: var(--color-primario);
+            margin-top: 30px;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+            animation: latido 2s ease-in-out infinite;
+        }
+
+        @keyframes latido {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* =========================================
+           PÉTALOS CAYENDO
+        ========================================= */
+        .petalo-cae {
+            position: fixed;
+            top: -20px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            border-radius: 15px 0 15px 0;
+            pointer-events: none;
+            z-index: 15;
+            opacity: 0.8;
+            box-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+        }
+
+        /* =========================================
+           FLORES AMARILLAS 
+        ========================================= */
+        .jardin-container {
+            position: fixed;
+            bottom: -20px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .flor-wrapper {
+            position: absolute;
+            bottom: 0;
+            transform-origin: bottom center;
+            animation: sway 5s ease-in-out infinite alternate;
+        }
+
+        @keyframes sway {
+            0% { transform: rotate(-4deg); }
+            100% { transform: rotate(4deg); }
+        }
+
+        .tallo {
+            width: 8px;
+            height: 100%;
+            background: linear-gradient(90deg, #1A5431, #2E8B57, #1A5431);
+            border-radius: 10px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .hoja {
+            position: absolute;
+            width: 50px;
+            height: 25px;
+            background: linear-gradient(135deg, #2E8B57, #1A5431);
+            border-radius: 50% 0 50% 0; 
+            box-shadow: inset 2px 2px 5px rgba(255,255,255,0.2);
+        }
+
+        .hoja-izq { left: -45px; top: 40%; transform: rotate(-30deg); }
+        .hoja-der { right: -45px; top: 60%; transform: scaleX(-1) rotate(-30deg); }
+
+        .cabeza-flor {
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 120px;
+            animation: rotar 25s linear infinite;
+        }
+
+        @keyframes rotar { 100% { transform: translateX(-50%) rotate(360deg); } }
+
+        .petalo {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 30px; height: 75px;
+            background: linear-gradient(135deg, #FFF600, #FFB300);
+            border-radius: 50% 50% 20% 20% / 50% 50% 80% 80%;
+            transform-origin: center bottom;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .centro-flor {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px; height: 50px;
+            background: radial-gradient(circle, #5c3a21 30%, #301708 80%);
+            border-radius: 50%;
+            z-index: 10;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.8), 0 0 15px rgba(0,0,0,0.5);
+        }
+
+        /* =========================================
+           SNOOPY
+        ========================================= */
+        .snoopy-container {
+            position: fixed;
+            bottom: 15px;
+            right: 8%; 
+            z-index: 25; 
+            animation: flotarSnoopy 3s ease-in-out infinite;
+        }
+
+        .snoopy-img {
+            width: clamp(120px, 15vw, 180px); 
+            height: auto;
+            filter: drop-shadow(0 15px 15px rgba(0,0,0,0.4));
+        }
+
+        @keyframes flotarSnoopy {
+            0%, 100% { transform: translateY(0) rotate(-2deg); }
+            50% { transform: translateY(-12px) rotate(2deg); }
+        }
+
+        /* =========================================
+           AUDIO Y LUCIÉRNAGAS
+        ========================================= */
+        .control-audio {
+            position: fixed;
+            top: 30px; right: 30px;
+            width: 50px; height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: 0.3s;
+        }
+
+        .control-audio:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        .luciernaga {
+            position: fixed;
+            background: var(--color-primario);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--color-primario), 0 0 20px #FFF;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @media(max-width: 600px) {
+            .tarjeta { padding: 40px 25px; }
+            .titulo { font-size: 2.5rem; }
+            .mensaje-final { font-size: 1.8rem; }
+            .snoopy-container { right: 5%; bottom: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="pantalla-inicio">
+        <button class="btn-lindo" onclick="revelarSorpresa()">Tengo algo especial para ti, hermosa 🌻</button>
+    </div>
+
+    <div class="ambient-light"></div>
+
+    <audio id="musica" loop>
+        <source src="musica.mp3" type="audio/mpeg">
+    </audio>
+
+    <button class="control-audio" onclick="toggleMusica()" id="botonMusica">
+        🔇
+    </button>
+
+    <div class="tarjeta-container" id="tarjeta-mensaje">
+        <div class="tarjeta">
+            <h1 class="titulo">Para ti, mi Domi</h1>
+            <p class="subtitulo">Feliz Día de las Flores Amarillas</p>
+
+            <div class="mensaje">
+                <p>Amor, primero disculpas por no poder darte unas flores amarillas normales como es lo comun en esta fecha.</p>
+                <p>Esto lo hago para decirte unas palabras, enserio te digo amor que anoche me pusiste muy sentimental, y de veras que eres perfecta Domi, eres una muy linda persona, linda chica, linda personalidad y me encantas demasiado.</p>
+                <p>Te has convertido en mi persona favorita, una persona la cual quisiera compartir mi vida contigo, quizás seamos muy jovenes aún para prometer que vamos a estar juntos el resto de nuestra vida, pero espero hacerte feliz todo el tiempo que estemos juntos, espero sea un largo tiempo, o si es mejor el resto de nuestra vida.</p>
+                <p>Muchas gracias por todo Domi, por hablar conmigo cuando me sentía triste, en las buenas, en las malas, me haces muy feliz.</p>
+                
+                <div class="mensaje-final">
+                    ¡Te quiero muchísimo! ❤️
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="jardin-container" id="jardin"></div>
+
+    <div class="snoopy-container">
+        <img src="https://media.tenor.com/D4s3mNl7-5AAAAAi/snoopy-peanuts.gif" alt="Snoopy con flores" class="snoopy-img">
+    </div>
+
+    <script>
+        // 0. FUNCIÓN PARA REVELAR LA SORPRESA
+        function revelarSorpresa() {
+            const pantalla = document.getElementById('pantalla-inicio');
+            const tarjeta = document.getElementById('tarjeta-mensaje');
+            const musica = document.getElementById('musica');
+            const botonMusica = document.getElementById('botonMusica');
+
+            // Ocultar la pantalla inicial
+            pantalla.style.opacity = '0';
+            pantalla.style.visibility = 'hidden';
+
+            // Mostrar la tarjeta
+            tarjeta.classList.add('revelada');
+
+            // Reproducir música (al ser activado por un clic, el navegador lo permite sin problemas)
+            musica.play().then(() => {
+                botonMusica.innerHTML = "🔊";
+            }).catch((e) => {
+                console.log("No se pudo reproducir el audio automáticamente.");
+            });
+        }
+
+        // 1. CONTROL DE AUDIO (Botón manual)
+        const musica = document.getElementById("musica");
+        const botonMusica = document.getElementById("botonMusica");
+
+        function toggleMusica() {
+            if (musica.paused) {
+                musica.play();
+                botonMusica.innerHTML = "🔊";
+            } else {
+                musica.pause();
+                botonMusica.innerHTML = "🔇";
+            }
+        }
+
+        // 2. GENERADOR DE GIRASOLES
+        function crearJardin() {
+            const jardin = document.getElementById('jardin');
+            
+            const configFlores = [
+                { height: 280, left: '5%', zIndex: 12, scale: 1.1, delay: '0s', blur: 0 }, 
+                { height: 350, left: '88%', zIndex: 12, scale: 1.25, delay: '-2s', blur: 0 }, 
+                { height: 200, left: '-2%', zIndex: 5, scale: 0.8, delay: '-1s', blur: 2 }, 
+                { height: 240, left: '96%', zIndex: 4, scale: 0.7, delay: '-3s', blur: 3 }, 
+                { height: 180, left: '20%', zIndex: 2, scale: 0.6, delay: '-4s', blur: 4 }, 
+                { height: 220, left: '75%', zIndex: 2, scale: 0.65, delay: '-1.5s', blur: 4 } 
+            ];
+
+            configFlores.forEach(config => {
+                const florWrapper = document.createElement('div');
+                florWrapper.className = 'flor-wrapper';
+                florWrapper.style.height = `${config.height}px`;
+                florWrapper.style.left = config.left;
+                florWrapper.style.zIndex = config.zIndex;
+                florWrapper.style.transform = `scale(${config.scale})`;
+                florWrapper.style.animationDelay = config.delay;
+                florWrapper.style.filter = `blur(${config.blur}px)`;
+                
+                florWrapper.innerHTML = `
+                    <div class="tallo">
+                        <div class="hoja hoja-izq"></div>
+                        <div class="hoja hoja-der"></div>
+                    </div>
+                `;
+
+                const cabeza = document.createElement('div');
+                cabeza.className = 'cabeza-flor';
+
+                for(let p=0; p<16; p++) {
+                    const petalo = document.createElement('div');
+                    petalo.className = 'petalo';
+                    const angulo = (360 / 16) * p;
+                    petalo.style.transform = `translate(-50%, -100%) rotate(${angulo}deg)`;
+                    const brillo = 90 + Math.random() * 20;
+                    petalo.style.filter = `brightness(${brillo}%)`;
+                    cabeza.appendChild(petalo);
+                }
+
+                const centro = document.createElement('div');
+                centro.className = 'centro-flor';
+                cabeza.appendChild(centro);
+
+                florWrapper.appendChild(cabeza);
+                jardin.appendChild(florWrapper);
+            });
+        }
+        crearJardin();
+
+        // 3. LLUVIA DE PÉTALOS
+        function crearLluviaPetalos() {
+            setInterval(() => {
+                const petalo = document.createElement('div');
+                petalo.className = 'petalo-cae';
+
+                const startX = Math.random() * window.innerWidth;
+                const size = 10 + Math.random() * 12; 
+                const duration = 6000 + Math.random() * 5000; 
+
+                petalo.style.width = `${size}px`;
+                petalo.style.height = `${size}px`;
+                petalo.style.left = `${startX}px`;
+
+                document.body.appendChild(petalo);
+
+                const sway = (Math.random() - 0.5) * 250; 
+
+                petalo.animate([
+                    { transform: `translate3d(0, -20px, 0) rotate(0deg)`, opacity: 0 },
+                    { opacity: 0.8, offset: 0.1 },
+                    { opacity: 0.8, offset: 0.8 },
+                    { transform: `translate3d(${sway}px, ${window.innerHeight + 50}px, 0) rotate(${Math.random() * 720 + 360}deg)`, opacity: 0 }
+                ], {
+                    duration: duration,
+                    easing: 'linear'
+                }).onfinish = () => petalo.remove(); 
+
+            }, 400); 
+        }
+        crearLluviaPetalos();
+
+        // 4. SISTEMA DE LUCIÉRNAGAS
+        function crearLuciernagas() {
+            for(let i = 0; i < 35; i++) {
+                const bug = document.createElement("div");
+                bug.className = "luciernaga";
+                
+                const size = Math.random() * 4 + 1;
+                const startX = Math.random() * window.innerWidth;
+                const duration = Math.random() * 10 + 10; 
+                const delay = Math.random() * 5;
+
+                bug.style.width = size + "px";
+                bug.style.height = size + "px";
+                bug.style.left = startX + "px";
+                bug.style.bottom = "-20px";
+                bug.style.transition = `transform ${duration}s linear`;
+                
+                document.body.appendChild(bug);
+
+                setTimeout(() => {
+                    const moveX = (Math.random() - 0.5) * 300; 
+                    const moveY = -(window.innerHeight + 50); 
+                    bug.style.transform = `translate(${moveX}px, ${moveY}px)`;
+                }, delay * 1000);
+
+                setInterval(() => {
+                    bug.style.transition = 'none';
+                    bug.style.transform = 'translate(0, 0)';
+                    setTimeout(() => {
+                        bug.style.transition = `transform ${duration}s linear`;
+                        const newMoveX = (Math.random() - 0.5) * 300;
+                        bug.style.transform = `translate(${newMoveX}px, ${moveY}px)`;
+                    }, 50);
+                }, (duration + delay) * 1000);
+            }
+        }
+        crearLuciernagas();
+    </script>
+</body>
+</html>
